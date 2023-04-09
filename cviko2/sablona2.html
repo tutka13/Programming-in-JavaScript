@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p>Zadaj meno: <input type="text" id="vstup"> </p>
+<button onclick="klikni()">klikni</button>
+<p id="vypis"></p>
+<script>
+	function klikni() {
+	var vstup = document.getElementById("vstup").value;
+	document.getElementById("vypis").innerHTML = "Ahoj " + vstup + "!";
+}
+</script>
+</body>
+</html>

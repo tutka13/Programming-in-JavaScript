@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p>Zadaj číslo: <input type="text" id="vstup"> </p>
+<button onclick="klikni()">Faktoriál</button>
+<p id="vypis"></p>
+<script>
+
+	function factorial(n){
+		var vysledok = 1;
+		for (var i=1; i<=n; i++) {
+			vysledok = vysledok * i;
+		}
+		return vysledok;
+	}
+	
+	function klikni() {
+	var cislo = document.getElementById("vstup").value;
+	document.getElementById("vypis").innerHTML = "Faktoriál je " + factorial(cislo) + ".";
+}
+</script>
+</body>
+</html>

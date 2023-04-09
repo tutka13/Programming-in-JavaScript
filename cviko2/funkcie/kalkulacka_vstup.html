@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p>Zadaj a: <input type="text" id="cislo1"> </p>
+<p>Zadaj b: <input type="text" id="cislo2"> </p>
+
+<button onclick="vypis_sucet()">Súčet</button>
+<button onclick="vypis_rozdiel()">Rozdiel</button>
+<button onclick="vypis_sucin()">Súčin</button>
+<button onclick="vypis_podiel()">Podiel</button>
+
+<p id="vypis"></p>
+
+<script>
+
+	function sucet(a, b){
+	return a + b;
+	}
+	
+	function rozdiel(a,b){
+	return a - b;
+	}
+	
+	function sucin(a,b){
+	return a*b;
+	}
+	
+	function podiel(a,b){
+	return a/b;
+	}
+	
+	function vypis_sucet() {
+	var c1 = parseInt(document.getElementById("cislo1").value);
+	var c2 = parseInt(document.getElementById("cislo2").value);
+	document.getElementById("vypis").innerHTML = "Výsledok je  " + sucet(c1, c2) + ".";
+	}
+	
+	function vypis_rozdiel() {
+	var c1 = parseInt(document.getElementById("cislo1").value);
+	var c2 = parseInt(document.getElementById("cislo2").value);
+	document.getElementById("vypis").innerHTML = "Výsledok je  " + rozdiel(c1, c2) + ".";
+	}
+	
+	function vypis_sucin() {
+	var c1 = parseInt(document.getElementById("cislo1").value);
+	var c2 = parseInt(document.getElementById("cislo2").value);
+	document.getElementById("vypis").innerHTML = "Výsledok je  " + sucin(c1, c2) + ".";
+	}
+	
+	function vypis_podiel(){
+	var c1 = parseInt(document.getElementById("cislo1").value);
+	var c2 = parseInt(document.getElementById("cislo2").value);
+	document.getElementById("vypis").innerHTML = "Výsledok je  " + podiel(c1,c2).toFixed(2) + "."; //aj so zaokruhlovanim
+	}
+	
+</script>
+</body>
+</html>

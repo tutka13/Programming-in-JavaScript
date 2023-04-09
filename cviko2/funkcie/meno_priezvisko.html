@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p>Zadaj meno: <input type="text" id="vstup_meno"> </p>
+<p>Zadaj priezvisko: <input type="text" id="vstup_priezvisko"> </p>
+<button onclick="klikni()">klikni</button>
+<p id="vypis1"></p>
+<p id="vypis2"></p>
+<script>
+	function klikni() {
+	var vstup1 = document.getElementById("vstup_meno").value
+	var vstup2 = document.getElementById("vstup_priezvisko").value;
+	document.getElementById("vypis1").innerHTML = "Ahoj " + vstup1 + " " + vstup2 + "!";
+	}
+</script>
+</body>
+</html>

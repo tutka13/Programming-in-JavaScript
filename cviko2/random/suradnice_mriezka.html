@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<button onclick="klik()">Vypíš dvojicu z mriežky</button>
+<p id="vypis"></p>
+<script>
+	var sirka = 36;
+	var vyska = 9;
+	
+	function rnd(n) {
+		var rnd = Math.floor(Math.random() * n) + 1;
+		return rnd;
+	}
+	
+	function generujX(){
+		var n = Math.floor((500 - 10)/sirka);
+		var x = rnd(n);
+		return x*sirka+10;
+	}
+	
+	function generujY(){
+		var m = Math.floor((500 - 10)/vyska);
+		var y = rnd(m);
+		return y*vyska+10;
+	}
+	
+	function klik(){
+		var ret = generujX() + " " + generujY();
+		document.getElementById("vypis").innerHTML = ret;
+	}
+		
+</script>
+</body>
+</html>
