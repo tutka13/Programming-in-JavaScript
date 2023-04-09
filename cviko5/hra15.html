@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 10; padding: 10; background-color:#d5dce6">
+<canvas id="canvas" style="border:1px solid; color:#848a91;"></canvas>
+<script>
+
+//vytvorenie pola
+var pole = [];
+for (var i = 1; i <= 15; i ++) {
+   pole.push(i);
+}
+pole.push(0);
+
+//inicializacia canvasu	
+canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+
+var SIRKA = 80;
+M = 4;
+N = 4;
+
+canvas.width = N * SIRKA;
+canvas.height = M * SIRKA;
+
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+
+function miesaj_pole() {
+  for (var i = 0; i < 30; i ++) {
+	var a = rnd(pole.length);
+	var b = rnd(pole.length);
+	var pomocnapremenna = pole[a];
+	pole[a] = pole[b];
+	pole[b] = pomocnapremenna;
+  }
+}
+
+function sipky(event) {
+  var index = pole.indexOf(0);
+  //console.log(index);
+  //console.log(pole);
+  switch (event.keyCode) {
+	case 37: 
+	//sipka vlavo
+	if (index != 3 && index != 7 && index != 11 && index != 15){
+	  var pomocnapremenna = pole[index + 1]
+	  pole[index + 1] = pole[index];
+	  pole[index] = pomocnapremenna;
+	}
+	break;
+	case 39: 
+	//sipka vpravo
+	if (index != 0 && index != 4 && index != 8 && index != 12){
+      var pomocnapremenna = pole[index - 1]
+	  pole[index - 1] = pole[index];
+	  pole[index] = pomocnapremenna; 
+	}
+	break;
+	case 38:
+	// doplň svoj kód pre šípku hore
+	if (index != 12 && index != 13 && index != 14 && index != 15){
+      var pomocnapremenna = pole[index + 4]
+	  pole[index + 4] = pole[index];
+	  pole[index] = pomocnapremenna; 
+	}
+	break;
+	case 40:
+	// doplň svoj kód pre šípku dole	
+	if (index != 0 && index != 1 && index != 2 && index != 3){
+      var pomocnapremenna = pole[index - 4]
+	  pole[index - 4] = pole[index];
+	  pole[index] = pomocnapremenna; 
+	}
+	break;
+	};
+kresli();
+kontrola();
+}
+
+function nakresli(r, s) {
+  if (pole[4*r+s] != 0) {
+	context.fillStyle = "#eb8f05";
+	context.fillRect(s*SIRKA + 1,r*SIRKA + 1,SIRKA - 2,SIRKA - 2);
+	context.rect(s*SIRKA,r*SIRKA,SIRKA,SIRKA);
+	context.fillStyle = "#000000";
+	context.font = "50px Arial";
+	context.fillText(pole[4*r+s],s*SIRKA+10,r*SIRKA+60);
+  } else {
+	context.fillStyle = "#FFFFFF";
+	context.fillRect(s*SIRKA + 1,r*SIRKA + 1,SIRKA - 2,SIRKA - 2);
+	context.rect(s*SIRKA,r*SIRKA,SIRKA,SIRKA);
+  }
+context.beginPath();
+context.strokeStyle = "#AAAAAA";
+context.stroke();
+}
+
+function kresli() {
+  // zmaz celu plochu na bielo
+  context.fillStyle = "#000000";
+  context.fillRect(0,0, canvas.width, canvas.height);
+  // nakresli vsetky policka z globalnej premennej pole
+  for (var i=0; i<4; i++) {
+    for (var j=0; j<4; j++) {
+	  nakresli(i,j);
+    }
+  }
+}
+
+function kontrola() {
+  var count = 0;
+  for (var i = 0; i < pole.length; i++) {
+    if (pole[i] == i+1) {
+	  count++;
+	}
+  }
+  if (pole[pole.length - 1] == 0) {
+	count++;
+  }
+  if (count == pole.length)
+  {
+	context.fillStyle = "#3dfc03";
+	context.font = "70px Arial";
+	context.fillText("Vyhral si!",20,150);
+  }
+}
+miesaj_pole();
+kresli();
+window.addEventListener("keydown", sipky);
+</script>
+</body>
+</html>

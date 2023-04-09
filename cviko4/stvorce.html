@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 5; padding: 0;">
+<p>Klikni do vyznačenej plochy</p>
+<canvas id= "canvas" width=1500 height=600></canvas>
+<script>
+const SIRKA = 15;
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+ctx.fillStyle = "#d5dce6";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+const rect = canvas.getBoundingClientRect();
+let canvasMouseX;
+let canvasMouseY;
+
+function mouseDown(e) {
+    canvasMouseX = e.clientX - rect.left;
+    canvasMouseY = e.clientY - rect.top;
+	ctx.fillStyle = "darkblue";
+    ctx.fillRect(canvasMouseX, canvasMouseY, SIRKA, SIRKA);   
+}
+
+canvas.addEventListener('mousedown', function (e) {
+      mouseDown(e);
+  });
+</script>
+</body>
+</html>

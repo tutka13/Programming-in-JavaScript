@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body style="margin: 0; padding: 0; background-color:#E3F1F2">
+<canvas id="canvas" width=1500 height=600></canvas>
+<p id="vypis"></p>
+<script>
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+canvas.onselectstart = function () { return false; }
+context.strokeStyle = "#000000";
+
+//inicializacia premennych a poli
+var N = 12;
+var SIRKA = 80;
+var pozicia_vzoru = [];
+var pozicia_stvorcov = [];
+var pole_farieb = [];
+var kto = -1;
+var dx, dy;
+
+//pole farieb
+var farby = ["#FFFFFF","#FF9ECDCC","#A5CA18CC","#68C3E2CC","#FFEC6CCC", "#E4A368CC"];
+
+function rnd(a) {
+  return Math.floor(Math.random() * a);
+}
+
+//vzorovy priklad
+/*pole_farieb.push(farby[0]);
+pole_farieb.push(farby[1]);
+pole_farieb.push(farby[0]);
+pole_farieb.push(farby[2]);
+pole_farieb.push(farby[0]);
+pole_farieb.push(farby[0]);
+pole_farieb.push(farby[1]);
+pole_farieb.push(farby[0]);
+pole_farieb.push(farby[3]);
+pole_farieb.push(farby[1]);
+pole_farieb.push(farby[0]);
+pole_farieb.push(farby[2]);*/
+
+for (let i = 0; i < 4; i++) {
+  //vygenerovanie vzoru
+  pole_farieb.push(farby[1+rnd(4)]);
+}
+for (let i = 0; i < 2; i++) {
+  //kopirovanie vzoru
+  pole_farieb.push(pole_farieb[0]);
+  pole_farieb.push(pole_farieb[1]);
+  pole_farieb.push(pole_farieb[2]);
+  pole_farieb.push(pole_farieb[3]);
+}
+for (let i = 0; i < 7; i++) {
+  //zmazanie farieb tak, aby bola moznost vyplnit pole
+  pole_farieb[rnd(11)] = farby[0];
+}
+//console.log(pole_farieb);
+
+//funkcia vygeneruje stvorce a moznosti
+function generate() {
+  for (var i = 0; i < N; i++) {
+    var xx = 85*i+5;
+	var yy = 10;
+	pozicia_stvorcov[i] = [xx,yy];	
+  }
+  for (var i = 0; i < 5; i++) {
+    pozicia_vzoru[i] = [250 + 100*i,120];
+  }
+}
+
+//vykreslenie moznosti a stvorcov funkcie
+function drawOptionsAndSquares() {
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  for (var i=0; i<N; i++) {	
+	context.beginPath();
+	context.rect(pozicia_stvorcov[i][0], pozicia_stvorcov[i][1], SIRKA, SIRKA);
+    context.fillStyle = pole_farieb[i];
+    context.fillRect(pozicia_stvorcov[i][0], pozicia_stvorcov[i][1], SIRKA, SIRKA);
+    context.stroke();
+  }
+  for (var i = 0; i < 5; i++) {
+	context.beginPath();
+	context.rect(pozicia_vzoru[i][0], pozicia_vzoru[i][1], SIRKA, SIRKA);
+	context.fillStyle = farby[i+1];
+	context.fillRect(pozicia_vzoru[i][0], pozicia_vzoru[i][1], SIRKA, SIRKA);
+	context.stroke();
+  } 
+}
+
+function redraw() {
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  for (var i = 0; i < 5; i++) {
+    pozicia_vzoru[i] = [250 + 100*i,120];
+  }
+  drawOptionsAndSquares();  
+}
+
+function klik(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  kto = -1;
+  for (var i=0; i<N; i++) {
+    if ((x > pozicia_vzoru[i][0] && x < pozicia_vzoru[i][0]+SIRKA) && 
+	(y > pozicia_vzoru[i][1] && y < pozicia_vzoru[i][1]+SIRKA)) {
+      kto = i;
+	  dx = x - pozicia_vzoru[kto][0];
+	  dy = y - pozicia_vzoru[kto][1];
+      //document.getElementById("vypis").innerHTML = "klik:"+ kto;
+	}
+  }
+}
+
+function tahaj(event) {
+  if (kto == -1) {
+    return;
+  } else {		
+	pozicia_vzoru[kto][0] = event.clientX - dx;
+	pozicia_vzoru[kto][1] = event.clientY - dy;
+	drawOptionsAndSquares();
+  }
+}
+
+function pusti(event) {
+  var x = pozicia_vzoru[kto][0];
+  var y = pozicia_vzoru[kto][1];
+  for (var i=0; i<N; i++) {
+    if ((x + 5 > pozicia_stvorcov[i][0] || x + 5 > pozicia_stvorcov[i][0]) && 
+	(x - 5 < pozicia_stvorcov[i][0]+SIRKA || x + 5 < pozicia_stvorcov[i][0]+SIRKA ) && 
+	(y + 5 > pozicia_stvorcov[i][1] || y - 5 > pozicia_stvorcov[i][1]) && 
+	(y - 5 < pozicia_stvorcov[i][1]+SIRKA || y + 5 < pozicia_stvorcov[i][1]+SIRKA) 
+	&& pole_farieb[i] == farby[0]) {
+      pole_farieb[i] = farby[kto+1];
+	  redraw();
+	}
+  }
+  kto = -1;
+}
+
+canvas.addEventListener("mousedown",klik);
+canvas.addEventListener("mousemove", tahaj);
+canvas.addEventListener("mouseup", pusti);
+
+generate();
+drawOptionsAndSquares();
+</script>
+</body>
+</html>

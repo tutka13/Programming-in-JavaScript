@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Umiestni tvary</title>
+  </head>
+  <body>
+    <canvas id="main" width="1500" height="600" style="border:2px solid #000000;"></canvas>
+	<p id="vypis1"></p>
+	<p id="vypis2"></p>
+    <script>
+      var main = document.getElementById("main");
+      var ctx = main.getContext("2d");
+	  var rect = main.getBoundingClientRect();
+	  
+	  var farby = ["blue", "green", "red"];
+      var Nstvorce = rnd(10); // počet štvorcov
+	  var Nkruhy = rnd(10); // pocet kruhov
+	  var sirka = [50, 30, 20, 15];
+	  
+	  var zadanie = ["Premiestni štvorce", "Premiestni všetky malé útvary", "Premiestni modré útvary", "Premiestni kruhy"];
+	  document.getElementById("vypis1").innerHTML = zadanie[rnd(4)];
+	  
+	  var poz = [];
+	  var colors = [];
+	  var pole = [];
+	  var kto = -1;
+	  var dx, dy;
+	  
+	  function rnd(a) {
+        return Math.floor(Math.random() * a);
+	  }
+	  
+	  var P = 0.5;
+	  function randomWithProbability() {
+	    var num = Math.random();
+	    if(num <= P) return 1;
+	    else return 0;
+	  }
+	  
+	  function positionX() {
+		var minca = randomWithProbability();
+		var X;
+		if (minca == 1) {
+			X = rnd(525)+25;
+		} else {
+			X = 625 + rnd(725);
+		}
+		return X;
+	  }
+	  
+	  function positionY() {
+		var minca = randomWithProbability();
+		var Y;
+		if (minca == 1) {
+			Y = rnd(125)+25;
+		} else {
+			Y = 525 + rnd(50);
+		}
+		return Y;
+	  }
+	  
+      function draw() {
+		//velky stvorec
+		ctx.rect(600, 200, 300, 300);
+		ctx.strokeStyle = '#000000';
+		ctx.stroke();
+		
+		//male stvorce
+		for (var i = 0; i < Nstvorce; i++) {
+			var velkost = sirka[rnd(4)];
+			pole.push(velkost);
+			var farba = farby[rnd(3)];
+			colors.push(farba);
+			
+			var xx = positionX();
+			var yy = positionY();
+			poz[i] = [xx,yy];
+			
+			ctx.fillStyle = farba;
+			ctx.fillRect(xx, yy, velkost, velkost);
+			
+			console.log(poz[i]);
+		}
+		for (var i = 0; i < Nkruhy; i++) {
+			var velkost = sirka[rnd(4)]/2;
+			pole.push(velkost);
+			var farba = farby[rnd(3)];
+			colors.push(farba)
+			
+			var xx = positionX();
+			var yy = positionY();
+			poz[Nstvorce + i] = [xx,yy];
+			
+			ctx.fillStyle = farba;
+			ctx.beginPath();
+			ctx.arc(xx, yy, velkost, 0, 2*Math.PI);
+			ctx.fill();
+			ctx.closePath();
+			
+			console.log(poz[Nstvorce + i]);
+		}
+      }
+	  
+	  function klik(event) {
+	    var x = event.clientX;
+	    var y = event.clientY;
+	    for (var i=0; i<Nstvorce+Nkruhy; i++) {
+		  if ((x > poz[i][0] && x < poz[i][0] + 50) && (y > poz[i][1] && y < poz[i][1] + 50)) {
+		    kto = i;
+		    dx = x - poz[kto][0];
+		    dy = y - poz[kto][1];
+		    document.getElementById("vypis2").innerHTML = "klik:"+ kto;
+		  }
+	    }
+	  }
+
+	function tahaj(event) {
+	  if (kto == -1) {
+		return;
+	  } else {
+		poz[kto][0] = event.clientX - dx;
+		poz[kto][1] = event.clientY - dy;
+		redraw();
+	  }
+	}
+
+	function pusti(event) {
+	  kto = -1;
+	}
+
+	main.addEventListener("mousedown",klik);
+	main.addEventListener("mousemove", tahaj);
+	main.addEventListener("mouseup", pusti);
+	draw();
+	
+	function redraw() {
+	  ctx.fillStyle = "#FFFFFF";
+	  ctx.fillRect(0, 0, main.width, main.height);
+	  ctx.rect(600, 200, 300, 300);
+	  ctx.strokeStyle = '#000000';
+	  ctx.stroke();
+	  
+      for (var i=0; i<Nstvorce; i++) {
+        ctx.fillRect(poz[i][0], poz[i][1], pole[i], pole[i]);
+		ctx.fillStyle = colors[i];		
+      }
+	  for (var i=0; i<Nkruhy; i++) {       
+		ctx.beginPath();
+		ctx.fillStyle = colors[i+ Nstvorce];
+        ctx.arc(poz[i + Nstvorce][0], poz[i + Nstvorce][1], pole[i + Nstvorce], 0, 2*Math.PI);
+		ctx.fill();
+		ctx.closePath();
+      }
+	}
+      
+    </script>
+  </body>
+</html>

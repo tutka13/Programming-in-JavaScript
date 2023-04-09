@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body style="margin: 5; padding: 0; background-color:#E3F1F2">
+<canvas id="canvas" width=1520 height=600></canvas>
+<p id="vypis"></p>
+<script>
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+canvas.onselectstart = function () { return false; }
+context.strokeStyle = "#000000";
+
+//inicializacia premennych a poli
+var N = 10;
+var pole_sirky_stvorce = [];
+var pole_sirky_vzory = [];
+
+var pozicia_vzoru = [];
+var pozicia_stvorcov = [];
+
+var pole_farieb = [];
+
+var kto = -1;
+var dx, dy;
+
+document.getElementById("vypis").innerHTML = "Umiestni štvorce na správne miesto podľa veľkosti!";
+//pole farieb
+var farby = ["#FFFFFF","#FF9ECDCC","#A5CA18CC","#68C3E2CC","#FFEC6CCC", "#E4A368CC"];
+
+function rnd(a) {
+  return Math.floor(Math.random() * a);
+}
+
+//vytvorenie pola sirky pre horny rad stvorcov - stvorce
+for (let i = 0; i < N; i++) {
+  pole_sirky_stvorce.push(15*(i+1));
+}
+
+//vytvorenie pola sirky pre dolny rad stvorcov - vzory
+for (let i = 0; i < 5; i++) {
+  pole_sirky_vzory.push(15*(1+rnd(N)));
+}
+
+for (let i = 0; i < N; i++) {
+  //vygenerovanie pola farieb
+  pole_farieb.push(farby[0]);
+}
+
+//funkcia vygeneruje stvorce v usporiadanom poradi
+function generate() {
+  for (var i = 0; i < N; i++) {
+    var xx = pole_sirky_stvorce[i]*i;
+	var yy = 10;
+	pozicia_stvorcov[i] = [xx,yy];	
+  }
+  for (var i = 0; i < 5; i++) {
+    pozicia_vzoru[i] = [155*i+250,170];
+  }
+}
+
+//vykreslenie moznosti a stvorcov funkcie
+function drawOptionsAndSquares() {
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  //stvorce
+  for (var i=0; i < N; i++) {	
+	context.beginPath();
+	context.rect(pozicia_stvorcov[i][0], pozicia_stvorcov[i][1], pole_sirky_stvorce[i], pole_sirky_stvorce[i]);
+	context.fillStyle = pole_farieb[i];
+    context.fillRect(pozicia_stvorcov[i][0], pozicia_stvorcov[i][1], pole_sirky_stvorce[i], pole_sirky_stvorce[i]);
+    context.stroke();
+  }
+  //vzory
+  for (var i = 0; i < 5; i++) {
+	context.beginPath();
+	context.rect(pozicia_vzoru[i][0], pozicia_vzoru[i][1], pole_sirky_vzory[i], pole_sirky_vzory[i]);
+	context.fillStyle = farby[i+1];
+	context.fillRect(pozicia_vzoru[i][0], pozicia_vzoru[i][1], pole_sirky_vzory[i], pole_sirky_vzory[i]);
+	context.stroke();
+  } 
+}
+
+function redraw() {
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  for (var i = 0; i < 5; i++) {
+    pozicia_vzoru[i] = [155*i+250,170];
+  }
+  drawOptionsAndSquares();  
+}
+
+function klik(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  kto = -1;
+  for (var i=0; i<5; i++) {
+    if ((x > pozicia_vzoru[i][0] && x < pozicia_vzoru[i][0] + pole_sirky_vzory[i]) && 
+	(y > pozicia_vzoru[i][1] && y < pozicia_vzoru[i][1] + pole_sirky_vzory[i])) {
+      kto = i;
+	  dx = x - pozicia_vzoru[kto][0];
+	  dy = y - pozicia_vzoru[kto][1];     
+	}
+	//document.getElementById("vypis").innerHTML = "klik:"+ kto;
+  }
+}
+
+function tahaj(event) {
+  if (kto == -1) {
+    return;
+  } else {		
+	pozicia_vzoru[kto][0] = event.clientX - dx;
+	pozicia_vzoru[kto][1] = event.clientY - dy;
+	drawOptionsAndSquares();
+  }
+}
+
+//podmienka vkladania do bielych stvorcov sa zmenila na podmienku pole_sirky_stvorce[i] == pole_sirky_vzory[kto]
+function pusti(event) {
+  var x = pozicia_vzoru[kto][0];
+  var y = pozicia_vzoru[kto][1];
+  for (var i=0; i<N; i++) {
+    if ((x + 5 > pozicia_stvorcov[i][0] && x - 5 < pozicia_stvorcov[i][0]+ pole_sirky_stvorce[i]) && 
+	(y + 5 > pozicia_stvorcov[i][1] && y - 5 < pozicia_stvorcov[i][1] + pole_sirky_stvorce[i]) 
+	&& pole_sirky_stvorce[i] == pole_sirky_vzory[kto]) {
+      pole_farieb[i] = farby[kto+1];
+	  redraw();
+	}
+  }
+  kto = -1;
+}
+
+canvas.addEventListener("mousedown",klik);
+canvas.addEventListener("mousemove", tahaj);
+canvas.addEventListener("mouseup", pusti);
+
+generate();
+drawOptionsAndSquares();
+</script>
+</body>
+</html>

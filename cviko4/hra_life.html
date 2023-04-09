@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 10; padding: 10; background-color:#d5dce6">
+<canvas id="canvas" style="border:1px solid; color:#848a91;"></canvas>
+<p></p>
+<button onclick="novaGeneracia()">Nová generácia</button>
+<script>
+/*var pole = [
+[0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 1, 0],
+[0, 0, 0, 0, 0, 1, 0],
+[0, 0, 0, 0, 0, 1, 0],
+[0, 0, 0, 0, 0, 0, 0]
+];*/
+
+//pole reprezentujuce ropuchu
+/*var pole = [
+[0, 0, 0, 0, 0, 0, 0],
+[0, 0, 1, 0, 0, 0, 0],
+[0, 1, 0, 0, 1, 0, 0],
+[0, 1, 0, 0, 1, 0, 0],
+[0, 0, 0, 1, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0]
+];*/
+
+//pole zo sablony
+var pole = [
+			[0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], 
+			[0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0], 
+			[1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1], 
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1], 
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			];
+			
+canvas = document.getElementById("canvas");
+context = canvas.getContext("2d");
+
+var SIRKA = 30;
+M = pole.length;
+N = pole[0].length;
+
+canvas.width = N * SIRKA;
+canvas.height = M * SIRKA;
+
+function nakresli(r, s) {
+  if (pole[r][s] == 0) {
+	context.fillStyle = "#FFFFFF";
+	context.fillRect(s*SIRKA + 1,r*SIRKA + 1,SIRKA - 2,SIRKA - 2);
+  } 
+context.beginPath();
+context.strokeStyle = "#AAAAAA";
+context.rect(s*SIRKA,r*SIRKA,SIRKA,SIRKA);
+context.stroke();
+}
+
+function kresli() {
+  // zmaz celu plochu na bielo
+  context.fillStyle = "#000000";
+  context.fillRect(0,0, canvas.width, canvas.height);
+  // nakresli vsetky policka z globalnej premennej pole
+  for (var i=0; i<pole.length; i++) {
+    for (var j=0; j<pole[i].length; j++) {
+      nakresli(i, j);
+    }
+  }
+}
+
+//funkcia prejde vsetkych susedov
+function zisti(r, s) {
+  var pocet = 0;
+  for (var i=r-1; i<r+2; i++) {
+    for (var j=s-1; j<s+2; j++) {
+	  if (i>=0 && i<M && j>=0 && j<N) {
+        if ((i != r || j != s) && pole[i][j] == 1) {
+		  pocet += 1;
+		}
+	  }
+    }
+  }
+  return pocet;
+}
+
+
+function novaGeneracia() {
+  var npole = [];
+    for (var r=0; r<M; r++) {
+	  npole[r] = [];
+		for (var s=0; s<N; s++) {
+		  npole[r][s] = pole[r][s];
+		  var pocetSusedov = zisti(r,s);
+		  if (pocetSusedov < 2) {
+			npole[r][s] = 0;
+		  } else if (pocetSusedov > 3) {
+			npole[r][s] = 0;
+		  } else if (pocetSusedov == 3) {
+			npole[r][s] = 1;
+		  }
+		}
+	}
+pole = npole;
+kresli();
+}
+
+kresli();
+</script>
+</body>
+</html>

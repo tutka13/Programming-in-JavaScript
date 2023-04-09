@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body style="margin: 0; padding: 0; background-color:#E3F1F2">
+<canvas id="canvas" width=800 height=600></canvas>
+<p id="vypis"></p>
+<script>
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+canvas.onselectstart = function () { return false; }
+var N = 10;
+var SIRKA = 20;
+var poz = [];
+var pole = [];
+var kto = -1;
+var dx, dy;
+
+function rnd(a) {
+  return Math.floor(Math.random() * a);
+}
+
+//pole farieb
+var farby = ["#FF9ECDCC","#A5CA18CC","#68C3E2CC","#CECECECC",
+"#FFEC6CCC","#E4A368CC","#9EFF9ECC","#CAA518CC","#C368E2CC",
+"#FF6CECCC","#CDFF9ECC"];
+
+//vygenerovane vysky ceruziek
+for (var i=0; i<N; i++) {
+  var xx = SIRKA + rnd(canvas.width-2*SIRKA);
+  var yy = 30+rnd(canvas.height-N*10-30);
+  poz[i] = [xx,yy];
+  pole[i] = 30+i*10;
+}
+
+//funkcia vykresli ceruzky
+function kresli() {
+  context.fillStyle = "#FFFFFF";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  for (var i=0; i<N; i++) {
+    context.fillStyle = farby[i%farby.length];
+    context.fillRect(poz[i][0], poz[i][1], SIRKA, pole[i]);
+  }
+}
+
+function klik(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  //kto = -1;
+  for (var i=0; i<N; i++) {
+    if (x > poz[i][0] && x < poz[i][0]+SIRKA && 
+	y > poz[i][1] && y < poz[i][1]+pole[i]) {
+      kto = i;
+	  dx = x - poz[kto][0];
+	  dy = y - poz[kto][1];
+      document.getElementById("vypis").innerHTML = "klik:"+ kto;
+	}
+  }
+}
+
+function tahaj(event) {
+  if (kto == -1) {
+    return;
+  } else {
+	poz[kto][0] = event.clientX - dx;
+	poz[kto][1] = event.clientY - dy;
+	kresli();
+  }
+}
+
+function pusti(event) {
+  kto = -1;
+}
+
+canvas.addEventListener("mousedown",klik);
+canvas.addEventListener("mousemove", tahaj);
+canvas.addEventListener("mouseup", pusti);
+kresli();
+
+// udalosti pre mobilné zariadenie
+function touchstart(event) { klik(event.touches[0]) }
+function touchmove(event) { pohyb(event.touches[0]);
+event.preventDefault(); }
+function touchend(event) { pusti(event.changedTouches[0]) }
+canvas.addEventListener('touchstart', touchstart, false);
+canvas.addEventListener('touchmove', touchmove, false);
+canvas.addEventListener('touchend', touchend, false);
+</script>
+</body>
+</html>

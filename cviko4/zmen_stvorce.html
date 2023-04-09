@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Generátor štvorcov</title>
+  </head>
+  <body>
+    <canvas id="canvas" width = 1510 height = 690></canvas>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+	  const rect = canvas.getBoundingClientRect();
+	  let canvasMouseX;
+	  let canvasMouseY;
+	  var kto;
+
+      const N = 50; // počet štvorcov
+      const SIRKA = 20; // veľkosť štvorca
+      const P = 0.2; // pravdepodobnosť modrej farby
+	  
+	  function randomColorWithProbability() {
+	    var num = Math.random();
+	    if(num <= P) return 1;
+	    else return 0;
+	  }
+
+      const squares = [];
+	  const xes = [];
+	  const yes = [];
+      for (let i = 0; i < N; i++) {
+        const x = Math.random() * canvas.width;
+		xes.push(x);
+        const y = Math.random() * canvas.height;
+		yes.push(y);
+        const color = randomColorWithProbability();
+		squares.push(color);
+      }
+
+      function drawSquares() {
+	    ctx.fillStyle = "#ebebeb";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		for (let i = 0; i < N; i++) {
+		  if (squares[i] == 0) {
+		    ctx.fillStyle = 'red';
+		  } else {
+			ctx.fillStyle = 'blue';
+		  }
+          ctx.fillRect(xes[i], yes[i], SIRKA, SIRKA);
+		}
+      }
+	  
+	  function mouseDown(e) {
+		canvasMouseX = e.clientX - rect.left;
+		canvasMouseY = e.clientY - rect.top;
+		for (let i = 0; i < N; i++) {
+		  if ((canvasMouseX - xes[i] <= SIRKA) && (canvasMouseX - xes[i] >= 0) && (canvasMouseY - yes[i] <= SIRKA) && (canvasMouseY - yes[i] >= 0)) {
+			if (squares[i] == 1) {
+			  squares[i] = 0;
+			} else {
+			  squares[i] = 1;
+			}
+		  }
+          drawSquares();
+		}  
+	  }
+
+	  canvas.addEventListener('mousedown', function (e) {
+      mouseDown(e);
+      });
+	  
+      drawSquares();
+    </script>
+  </body>
+</html>

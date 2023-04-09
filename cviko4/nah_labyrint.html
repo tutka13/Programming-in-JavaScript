@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p id="vypis"></p>
+<script>
+const M = 7;
+const N = 5;
+var ret = "";
+
+const arr = new Array(M);
+for (let i = 0; i < M; i++) {
+  arr[i] = new Array(N);
+  for (let j = 0; j < N; j++) {
+    arr[i][j] = Math.round(Math.random());
+  }
+  ret += arr[i].join(", ");
+  ret += "</br>";
+}
+console.log(arr);
+document.getElementById("vypis").innerHTML = ret;
+ 
+</script>
+</body>
+</html>
