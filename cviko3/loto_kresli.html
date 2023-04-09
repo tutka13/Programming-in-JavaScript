@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 0; padding: 0;">
+<canvas id= "canvas" width=800 height=800></canvas>
+<script>
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+
+const N = 49;
+var pole = [];
+for (var i = 1; i <= N; i++) {
+  pole.push(i); 
+}
+
+for (var i = 0; i < 100; i ++) {
+  var a = rnd(N)+1;
+  var b = rnd(N)+1;
+  var pomocnapremenna = pole[a-1];
+  pole[a-1] = pole[b-1];
+  pole[b-1] = pomocnapremenna;
+}
+
+var novepole = [];
+for (var i = 0; i < 6; i ++) {
+  novepole[i] = pole[i];
+}
+
+ctx.font = "30px arial";
+for (var i = 0; i < novepole.length; i++) {
+  ctx.beginPath();
+  ctx.rect(60*i+5, 10, 50, 50);
+  ctx.fillStyle = "darkblue";
+  ctx.fillRect(60*i+5, 10, 50, 50);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillText(novepole[i], 60*i + 15, 45);
+  ctx.strokeStyle = "#000000";
+  ctx.stroke();
+}
+
+</script>
+</body>
+</html>

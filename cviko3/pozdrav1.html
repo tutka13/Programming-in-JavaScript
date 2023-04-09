@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+
+<button onclick="klikni()">Koľko je hodín?</button>
+<p id="vypis"></p>
+<p id="vypis2"></p>
+<script>
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+	
+function klikni() {
+  var hodiny = rnd(24);
+  document.getElementById("vypis").innerHTML = "Je "  + hodiny + " hodín!";
+  
+  if (hodiny <10) {
+	document.getElementById("vypis2").innerHTML = "Dobré ráno!";
+  } else if (hodiny < 18) {
+	document.getElementById("vypis2").innerHTML = "Dobrý deň!";
+  } else {
+	document.getElementById("vypis2").innerHTML = "Dobrý večer!";
+  }
+}
+</script>
+</body>
+</html>

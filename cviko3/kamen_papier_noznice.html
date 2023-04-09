@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p>Zadaj k, p, n: <input type="text" id="vstup"> </p>
+<button onclick="klikni()">Hraj</button>
+<p id="vypis"></p>
+<p id="vypis2"></p>
+<p id="vypis3"></p>
+<script>
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+	
+function klikni() {
+  var vstup = document.getElementById("vstup").value;
+  
+  var pc = rnd(3);
+  var vstup2;
+  if (pc == 0) {
+    vstup2 = "k";
+  } else if (pc == 1) {
+	vstup2 = "p";
+  } else {
+	vstup2 = "n";
+  }
+  
+  document.getElementById("vypis").innerHTML = "Hráč zadal " + vstup + ".";
+  document.getElementById("vypis2").innerHTML = "Počítač zadal " + vstup2 + ".";
+
+  if (vstup == vstup2) {
+    document.getElementById("vypis3").innerHTML = "Je remíza.";
+  } else if ((vstup == "p" && vstup2 == "k") || (vstup == "k" && vstup2 == "n") || (vstup == "n" && vstup2 == "p")){
+	document.getElementById("vypis3").innerHTML = "Vyhral hráč.";
+  }	else if ((vstup == "p" && vstup2 == "n") || (vstup == "k" && vstup2 == "p") || (vstup == "n" && vstup2 == "k")){
+	document.getElementById("vypis3").innerHTML = "Vyhral počítač.";
+  }
+}
+	
+</script>
+</body>
+</html>

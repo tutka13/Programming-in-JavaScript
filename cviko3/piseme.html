@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 0; padding: 0;">
+<canvas id= "canvas" width=800 height=800></canvas>
+<script>
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+	
+ctx.font = "30px arial";
+for (var i = 0; i < 10; i++) {
+  var a = rnd(550);
+  var b = rnd(550);
+  ctx.fillText("JavaScript je super!", a, b);
+}
+</script>
+</body>
+</html>

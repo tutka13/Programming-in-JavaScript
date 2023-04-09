@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 0; padding: 0; background-color:#d5dce6">
+<canvas id="canvas" width=1800 height=300></canvas>
+<script>
+canvas = document.getElementById("canvas");
+context = canvas.getContext("2d");
+context.fillStyle = "#FFFFFF";
+context.fillRect(0, 0, canvas.width, canvas.height);
+
+context.beginPath();
+context.rect(10, 30, 100, 100);
+context.strokeStyle = '#000000';
+context.stroke();
+
+context.beginPath();
+context.rect(160, 30, 100, 100);
+context.fillStyle = "#3140b0";
+context.fillRect(160, 30, 100, 100);
+
+context.beginPath();
+context.rect(310, 30, 100, 100);
+context.strokeStyle = "#000000";
+context.stroke();
+context.fillStyle = "#3140b0";
+context.fillRect(310, 30, 100, 100);
+
+context.beginPath();
+context.arc(530, 80, 60, 0, 2 * Math.PI);
+context.strokeStyle = '#000000';
+context.stroke();
+</script>
+</body>
+</html>

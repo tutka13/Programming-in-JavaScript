@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 0; padding: 0; background-color:#FFFFFF">
+<canvas id="canvas" width=1800 height=300 ></canvas>
+<script>
+canvas = document.getElementById("canvas");
+context = canvas.getContext("2d");
+context.fillStyle = "#d5dce6";
+context.fillRect(0, 0, canvas.width, canvas.height);
+
+function randomWithProbability() {
+  var num = Math.random();
+  if(num <= 0.2) return 1;  //pravdepodobnost 0.2
+  else return 0;
+}
+
+const N = 8;
+var pole = [];
+for (let i = 0; i < N; i++) {
+  pole.push(randomWithProbability());
+}
+
+for (let j = 0; j < pole.length; j++) {
+  if (pole[j]==1) {
+    context.fillStyle = "#000000";
+  } else {
+    context.fillStyle = "#FFFFFF";
+  }
+  context.beginPath();
+  context.rect(102*j + 5, 10, 100, 100);
+  context.fillRect(102*j + 5, 10, 100, 100);
+  context.strokeStyle = "#000000";
+  context.stroke();
+}
+	
+</script>
+</body>
+</html>

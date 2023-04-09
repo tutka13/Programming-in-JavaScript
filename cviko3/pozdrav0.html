@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p id="vypis"></p>
+<script>
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+	
+var hodiny = rnd(24);
+	
+if (hodiny < 12) {
+  document.getElementById("vypis").innerHTML = "Dobré ráno! Je " + hodiny + " hodín.";
+} else {
+  document.getElementById("vypis").innerHTML = "Dobrý deň! Je " + hodiny + " hodín.";
+}
+</script>
+</body>
+</html>

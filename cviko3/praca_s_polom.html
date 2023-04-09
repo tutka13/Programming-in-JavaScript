@@ -1,0 +1,33 @@
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p id="vypis"></p>
+<p id="vypis1"></p>
+<p id="vypis2"></p>
+<p id="vypis3"></p>
+<p id="vypis4"></p>
+<p id="vypis5"></p>
+<p id="vypis6"></p>
+<p id="vypis7"></p>
+<p id="vypis8"></p>
+<script>
+var cisla = [3, 56, 124, 425, 123, 7645];
+document.getElementById("vypis").innerHTML = "Vypísanie prvkov poľa: " + cisla.join(", ");
+var c3 = cisla[2];
+document.getElementById("vypis1").innerHTML = "Posledná hodnota poľa: " + c3;
+cisla[9] = 9999;
+document.getElementById("vypis2").innerHTML = "Zmena konkrétnej hodnoty podľa indexu: " + cisla.join(", ");
+cisla.pop();
+document.getElementById("vypis3").innerHTML = "Zrušenie poslednej hodnoty: " + cisla.join(", ");
+document.getElementById("vypis4").innerHTML = "Dĺžka poľa: " + cisla.length;
+cisla[cisla.length] = 10000;
+document.getElementById("vypis5").innerHTML = "Vloženie novej hodnoty na koniec poľa: " + cisla.join(", ");
+cisla.shift();
+document.getElementById("vypis6").innerHTML = "Zrušenie prvej hodnoty: " + cisla.join(", ");
+cisla.unshift(0);
+document.getElementById("vypis7").innerHTML = "Vloženie novej hodnoty na začiatok poľa: " + cisla.join(", ");
+cisla[8] = 1111111;
+document.getElementById("vypis8").innerHTML = "Vloženie hodnoty na neexistujúci index:" + cisla.join(", ");
+</script>
+</body>
+</html>

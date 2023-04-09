@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 10; padding: 0;">
+<canvas id= "canvas" width=1800 height=300></canvas>
+<p>Zadaj veľkosť strany štvorca: <input type="text" id="cislo1"> </p>
+<button onclick="klikni()">Vykresli</button>
+<p>Zadaj číslo štvorca: <input type="text" id="cislo2"> </p>
+<button onclick="zmen()">Zmeň</button>
+<script>
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+ctx.fillStyle = "#d5dce6";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.font = "20px arial";
+
+function random(){
+  var num = Math.random();
+  if(num <= 0.5) return 1;
+  else return 0;
+}
+  
+const N = 10;
+var pole = [];
+for (let i = 0; i < N; i++) {
+  pole.push(random());
+}
+
+function klikni() {
+  var a = parseInt(document.getElementById("cislo1").value);
+  for (var i = 0; i < pole.length; i++) {
+    if (pole[i]==1) {
+      ctx.fillStyle = "#848a91";
+	} else {
+      ctx.fillStyle = "#FFFFFF";
+	}
+	ctx.beginPath();
+	ctx.rect((a+10)*i+5, 10, a, a); 
+	ctx.fillRect((a+10)*i+5, 10, a, a);	
+	ctx.fillStyle = "#000000";
+	ctx.fillText(i+1,(a+10)*i+10, a);
+	ctx.strokeStyle = "#000000";
+	ctx.stroke();
+  }
+}
+
+function zmen() {
+  var a = parseInt(document.getElementById("cislo2").value);
+  if (pole[a-1]==1) {
+    pole[a-1] = 0;
+    klikni();
+  } else {
+    pole[a-1] = 1;
+	klikni();
+  }
+}
+
+</script>
+</body>
+</html>

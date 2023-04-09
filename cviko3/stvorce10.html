@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin: 10; padding: 0;">
+<canvas id= "canvas" width=1800 height=300></canvas>
+<p>Zadaj veľkosť strany štvorca: <input type="text" id="cislo1"> </p>
+<button onclick="klikni()">Vykresli</button>
+<script>
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+ctx.fillStyle = "#d5dce6";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+function klikni() {
+  var a = parseInt(document.getElementById("cislo1").value);
+  ctx.font = "20px arial";
+  for (var i = 0; i < 10; i++) {
+    ctx.beginPath();
+	ctx.rect((a+10)*i+5, 10, a, a); 
+	ctx.fillStyle = "darkblue";
+	ctx.fillRect((a+10)*i+5, 10, a, a); 
+	ctx.fillStyle = "#ffffff";
+	ctx.fillText(i+1,(a+10)*i+10, a);
+	ctx.strokeStyle = "#000000";
+	ctx.stroke();
+  }
+}
+
+</script>
+</body>
+</html>

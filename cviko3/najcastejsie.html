@@ -1,0 +1,54 @@
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p id="vypis"></p>
+<p id="vypis1"></p>
+<p id="vypis2"></p>
+<script>
+function rnd(n) {
+  var rnd = Math.floor(Math.random() * n);
+  return rnd;
+}
+
+//funkcia najde maximum v poli
+function getMax(arr) {
+  let maximum = Math.max(...arr);
+  return maximum;
+}
+
+//vytvorenie pola
+var N = 49;
+var pole = [];
+var pole_indexov = [];
+for (var i = 0; i < N; i++) {
+  pole.push(i);
+  pole_indexov.push(0); 
+}
+
+var pocet_opakovani = 1000;
+
+for (var j = 0; j < pocet_opakovani; j++) {
+  //pomiesanie pola
+  for (var i = 0; i < 100; i++) {
+	var a = rnd(N);
+	var b = rnd(N);
+	var pomocnapremenna = pole[a];
+	pole[a] = pole[b];
+	pole[b] = pomocnapremenna;
+  }
+  // 1 tah loto
+  for (var i = 0; i < 49; i++) {
+	if (pole[0]==i) {
+	  pole_indexov[i]++;
+	}
+  }
+}
+
+document.getElementById("vypis").innerHTML = "Pole početností: " + pole_indexov.join(", ");
+var a = getMax(pole_indexov);
+document.getElementById("vypis1").innerHTML = "Maximálna početnosť je " + a + ".";
+document.getElementById("vypis2").innerHTML = "V losovaní sa vyskytlo najviackrát číslo " + pole_indexov.indexOf(a) + ".";
+
+</script>
+</body>
+</html>
