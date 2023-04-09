@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body style="margin: 0; padding: 0; background-color:#CFCFCF">
+<p id="vypis"></p>
+
+<script>
+	var rok = 2024;
+	
+    document.getElementById("vypis").innerHTML = (rok % 4 == 0 && rok % 100 != 0) || rok % 400 == 0;
+</script>
+
+</body>
+</html>

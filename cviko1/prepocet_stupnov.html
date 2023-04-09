@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body style="margin: 0; padding: 0; background-color:#CFCFCF">
+<p id="vypis1"></p>
+<p id="vypis2"></p>
+
+<script>
+	var f = 87;
+	var c = 5*(f - 32)/9;
+	
+    document.getElementById("vypis1").innerHTML = "Konverzia " + f + " stupňov Fahrenheita na stupne Celzia je " + c.toFixed(2) + ".";
+
+	var c = 30.56;
+	var f = 9/5*c + 32;
+	
+    document.getElementById("vypis2").innerHTML = "Konverzia " + c + " stupňov Celzia na stupne Fahrenheita je " + f.toFixed(2) + ".";
+
+</script>
+
+</body>
+</html>

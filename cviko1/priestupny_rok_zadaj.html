@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body>
+<p>Zadaj rok: <input type="text" id="rok"> </p>
+<button onclick="klikni()">Je priestupný?</button>
+<p id="vypis"></p>
+
+<script>
+	//var year = "rok"; 	
+   
+	function klikni() {
+	var vstup = document.getElementById("rok").value;
+	 document.getElementById("vypis").innerHTML = (vstup % 4 == 0 && rok % 100 != 0) || rok % 400 == 0;
+}
+</script>
+</body>
+</html>

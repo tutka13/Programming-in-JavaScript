@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="UTF-8"> </head>
+<body style="margin: 0; padding: 0; background-color:#CFCFCF">
+<p id="vypis1"></p>
+<p id="vypis2"></p>
+
+<script>
+	var pis = "b";
+	
+	//vypise true, ak je pis samohlaska
+    document.getElementById("vypis1").innerHTML = pis == 'a' || pis == 'e' || pis == 'i' || pis == 'o' || pis == 'u' || pis == 'y';
+	
+	document.getElementById("vypis2").innerHTML = 'aeiouy'.indexOf(pis) > -1;
+
+	//indexOf
+</script>
+
+</body>
+</html>
